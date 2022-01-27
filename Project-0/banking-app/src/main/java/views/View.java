@@ -1,7 +1,6 @@
 package views;
 
-// I am going to need 6 views
-//
+// Abstract class for views to inherit from.
 public abstract class View {
 
     protected String viewName;

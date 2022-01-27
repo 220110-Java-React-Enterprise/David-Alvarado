@@ -1,11 +1,14 @@
 package crud;
-
+import customlist.CustomLinkedList;
 import objectmodels.AccountModel;
 import objectmodels.UserModel;
-
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.LinkedList;
+
+
+/*This class is responsible for all CRUD functions
+that deal with the bank account side (not user profile)
+of this app */
 
 public class AccountCRUD {
     private final Connection connection;
@@ -17,6 +20,12 @@ public class AccountCRUD {
     }
 
     public boolean createNewAccount(int user_id){
+        // Method creates a new account into the database.
+        // INPUT: user id #
+        // OUTPUT: creates an entry into the account table and updates the junction table.
+        // RETURN: true if successful, false otherwise.
+
+
         String accountTableStatement = "INSERT INTO account (current_balance) VALUES (?)";
         String userAccJctTableStatement = "INSERT INTO user_account_jct (account_id, user_id) VALUES (?,?)";
 
@@ -53,6 +62,10 @@ public class AccountCRUD {
 
 
     public void makeDeposit(Integer id, float depositAmount, float oldAmount){
+        // Method makes a deposit into the appropriate account.
+        // INPUT: account id, deposit amount, original amount.
+        // OUTPUT: Updates account balance in the accounts table where the account id's match.
+        // RETURN: VOID
         String sql = "Update account SET current_balance = ? WHERE account_id =?";
 
         if (depositAmount < 0){
@@ -84,6 +97,10 @@ public class AccountCRUD {
 
 
     public void withdrawal(Integer id, float withdrawAmount, float oldAmount){
+        // Method makes a withdrawal from the appropriate account.
+        // INPUT: account id, deposit amount, original amount.
+        // OUTPUT: Updates account balance in the accounts table where the account id's match.
+        // RETURN: VOID
         String sql = "Update account SET current_balance = ? WHERE account_id =?";
 
         if (withdrawAmount < 0){
@@ -115,9 +132,14 @@ public class AccountCRUD {
 
         }
     }
-    public LinkedList<AccountModel> retrieveBankAccounts(int user_id){
-        LinkedList<AccountModel> accountList= new LinkedList<>();
-        LinkedList<Integer> accountNumbers = new LinkedList<>();
+    public CustomLinkedList<AccountModel> retrieveBankAccounts(int user_id){
+        // Method collects all account ID's associated with the user ID (jct_table)
+        // and uses them to retrieve the balance from each account using the account table.
+        // INPUT: account id
+        // OUTPUT: Populates a linked list which holds an account model for later processing.
+        // RETURN: linkedlist of type AccountModel.
+        CustomLinkedList<AccountModel> accountList= new CustomLinkedList<>();
+        CustomLinkedList<Integer> accountNumbers = new CustomLinkedList<>();
 
         String sqlJct = "SELECT account_id FROM user_account_jct WHERE user_id=?";
         String sqlAcc = "SELECT * FROM account WHERE account_id = ?";

@@ -1,5 +1,7 @@
 package objectmodels;
 
+// Model used to hold and access all data pertaining to the user
+// attribute side of app
 public class UserModel {
     private static UserModel model;
     private int id;
@@ -20,7 +22,13 @@ public class UserModel {
         }
         return model;
     }
+
     public boolean isNull(){
+        // Method checks that all required attributes hold a value
+        // INPUT:
+        // OUTPUT: a boolean value based on if an attribute holds a null value
+        // RETURN: TRUE if null is found, FALSE otherwise.
+
         if (firstName == null || lastName== null  ||
                 phoneNumber == null ||email == null ||
                 username == null || password == null){

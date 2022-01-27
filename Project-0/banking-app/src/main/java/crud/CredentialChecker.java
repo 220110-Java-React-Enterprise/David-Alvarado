@@ -1,5 +1,4 @@
 package crud;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +6,8 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+// Class used to check if the user input is of correct format when registering.
+// (singleton, can be accessed from anywhere with having to create multiple instances of itself).
 public class CredentialChecker {
     private static CredentialChecker credentialChecker;
     private final Connection connection = ConnectionManager.getConnection();
@@ -23,7 +24,13 @@ public class CredentialChecker {
         return  credentialChecker;
     }
 
+
     public boolean isNameValid(String name){
+        // Method checks the name attribute of a user to prevent special characters
+        // and numbers from being accepted using regular expression (regex)
+        // INPUT: name
+        // OUTPUT: a boolean value based on if there is a match in the forbidden pattern.
+        // RETURN: TRUE if valid, FALSE otherwise.
         if (name.length() == 0 || name.length() > 100){
             System.out.println("\n You left the \"name\" portion of the registration empty or name is too long. Try again.");
             return false;
@@ -44,6 +51,13 @@ public class CredentialChecker {
     }
 
     public boolean isPhoneValid(String phone){
+        // Method checks the phone attribute of a user to prevent special
+        // and alphabetical characters from being accepted using regular expression (regex)
+        // Duplicate check is done against the database as well. (Fails if duplicate)
+        // INPUT: phone
+        // OUTPUT: a boolean value based on if there is a match in the forbidden pattern/duplicate.
+        // RETURN: TRUE if valid, FALSE otherwise.
+
         if (phone.length() != 10){
             System.out.println("\n You're phone number has more than 10 digits or is empty. Please try again.");
             return false;
@@ -64,6 +78,13 @@ public class CredentialChecker {
     }
 
     public boolean isEmailValid(String email) {
+        // Method checks the email attribute of a user to prevent incorrect email format
+        // with the use of regular expression (regex).
+        // Duplicate check is done against the database as well. (Fails if duplicate)
+        // INPUT: email
+        // OUTPUT: a boolean value based on if there is a match in the accepted pattern/ duplicate.
+        // RETURN: TRUE if valid, FALSE otherwise.
+
         if (email.length() == 0 || email.length() > 200) {
             System.out.println("\n You left the \"email\" portion of the registration empty or email is too long. Try again.");
             return false;
@@ -85,7 +106,12 @@ public class CredentialChecker {
         }
 
     }
+
     public boolean isUsernameValid(String username){
+        // Method checks the username attribute of the user to prevent duplicates.
+        // INPUT: username
+        // OUTPUT: a boolean value based on if username name is in use.
+        // RETURN: TRUE if valid, FALSE otherwise.
         if (username.length() == 0 || username.length() > 100){
             System.out.println("\n You left the \"username\" portion of the registration empty or email too long. Try again.");
             return false;
@@ -99,7 +125,10 @@ public class CredentialChecker {
     }
 
     public boolean isThereDuplicate(String str, String col){
-
+        // Method checks for duplicates for user attributes: phone,email,username
+        // INPUT: user input string value, name of column to check against.
+        // OUTPUT: a boolean value based on if there is a duplicate.
+        // RETURN: TRUE if duplicate found, FALSE otherwise.
         String sql;
         switch (col) {
             case "phone":

@@ -1,9 +1,9 @@
 package crud;
-
 import objectmodels.UserModel;
-
 import java.sql.*;
 
+
+// class in charge of all CRUD functions for User personal information.
 public class UserCRUD{
     private final Connection connection;
 
@@ -12,6 +12,10 @@ public class UserCRUD{
         connection = ConnectionManager.getConnection();
     }
 
+    // Method creates an entry using user input to fill in table columns
+    // INPUT: UserModel
+    // OUTPUT: Table is populated
+    // RETURN: userID.
 
     public int createNewUser(UserModel model) {
         String sql = "INSERT INTO users (f_name,l_name,phone,email,username,password) VALUES (?,?,?,?,?,?)";
@@ -38,6 +42,10 @@ public class UserCRUD{
         }
 
     }
+    // Method in charge of checking user-input credentials against database
+    // INPUT: username, password
+    // OUTPUT: a boolean value based on if we find a match
+    // RETURN: TRUE if found, FALSE otherwise.
 
     public boolean login(String username, String password) {
         String sql = "SELECT * FROM users WHERE username=? AND password=?";

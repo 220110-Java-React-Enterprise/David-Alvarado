@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+// Class in charge of the first view that all users see when
+// starting app.
 public class WelcomeView extends View {
 
     public WelcomeView(){
@@ -15,8 +17,12 @@ public class WelcomeView extends View {
 
     @Override
     public void renderView() {
+        // Method renders the welcome menu view of the account.
+        // INPUT: user input
+        // OUTPUT: user interface to console.
+        // RETURN: Void
         try {
-            File file = new File(System.getProperty("user.dir") + "/src/welcome-title");
+            File file = new File(System.getProperty("user.dir") + "/src/main/java/arttxt/welcome-title");
             Scanner welcomeText = new Scanner(file);
             while (welcomeText.hasNext()) {
                 System.out.println(welcomeText.nextLine());
@@ -38,9 +44,12 @@ public class WelcomeView extends View {
     }
 
 
-    // need to implement the option for existing.
     @Override
     public void nextView() {
+        // Method changes view based on user input
+        // INPUT: user input saved to local variable and accessed here.
+        // OUTPUT: next view or quit program
+        // RETURN: Void
         if (viewBasedOnUserInputValue.equals("2")){
             viewManager.navigate("RegistrationForm");
         }else if (viewBasedOnUserInputValue.equals("1")){
@@ -54,6 +63,10 @@ public class WelcomeView extends View {
 
 
     public void invalidEntry(){
+        // Method used to let user know they made mistake
+        // INPUT: none
+        // OUTPUT: prints to console
+        // RETURN: Void
         System.out.println("You've entered an invalid entry. Please try again.");
         System.out.println("If you're an existing customer, please type \"existing\".");
         System.out.println("Otherwise, if you're a new customer, please type in \"new\".");

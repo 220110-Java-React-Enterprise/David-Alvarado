@@ -1,15 +1,19 @@
 package views;
 
 import crud.AccountCRUD;
+import customlist.CustomLinkedList;
 import objectmodels.AccountModel;
 import objectmodels.UserModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
-import java.util.LinkedList;
+
 import java.util.Scanner;
 
+//Class is in charge of showing menu and
+// all things related to the account
+// side of app.
 public class AccountView extends View {
 
     public AccountView(){
@@ -21,8 +25,12 @@ public class AccountView extends View {
 
     @Override
     public void renderView() {
+        // Method renders the main menu view of the account.
+        // INPUT: user input
+        // OUTPUT: user interface to console.
+        // RETURN: Void
         try {
-            File file = new File(System.getProperty("user.dir") + "/src/accounts-title");
+            File file = new File(System.getProperty("user.dir") + "/src/main/java/arttxt/accounts-title");
             Scanner welcomeText = new Scanner(file);
             System.out.print("\n\n\n\n");
             while (welcomeText.hasNext()) {
@@ -63,11 +71,19 @@ public class AccountView extends View {
         }
     }
 
+
     public void withdrawFromExisitngAcc(){
+        // Method is in charge of showing menu and guiding user
+        // to successfully withdraw money from a valid account with
+        // valid balance
+        // INPUT: user input
+        // OUTPUT: change of account table balance value if criteria is met.
+        // RETURN: VOID
+
         UserModel currentUser = UserModel.getUserModel();
         AccountCRUD crud = new AccountCRUD();
-        LinkedList<AccountModel> accList;
-        LinkedList<Integer> accountNumbers = new LinkedList<>();
+        CustomLinkedList<AccountModel> accList;
+        CustomLinkedList<Integer> accountNumbers = new CustomLinkedList<>();
         accList = crud.retrieveBankAccounts(currentUser.getId());
 
         if (accList != null) {
@@ -82,7 +98,7 @@ public class AccountView extends View {
             System.out.println("that you wish to WITHDRAW FROM: ");
             int answer = viewManager.getScanner().nextInt();
             viewManager.getScanner().nextLine();
-            if (accountNumbers.contains(answer)){
+            if (accountNumbers.contains(answer) != -1){
 
                 System.out.println("Enter the amount you want to WITHDRAW (positive numbers only): ");
                 float withdrawAmount = 0.00f;
@@ -96,7 +112,7 @@ public class AccountView extends View {
                 }
                 viewManager.getScanner().nextLine();
 
-                crud.withdrawal(answer, withdrawAmount, accList.get(accountNumbers.indexOf(answer)).getCurrentBalance());
+                crud.withdrawal(answer, withdrawAmount, accList.get(accountNumbers.contains(answer)).getCurrentBalance());
                 System.out.println("\n\n Press any key followed by enter to continue...");
                 viewManager.getScanner().nextLine();
             }else{
@@ -116,10 +132,16 @@ public class AccountView extends View {
 
 
     public void depositToExistingAcc() {
+        // Method is in charge of showing menu and guiding user
+        // to successfully deposit money from a valid account
+        // INPUT: user input
+        // OUTPUT: change of account table balance value if criteria is met.
+        // RETURN: VOID
+
         UserModel currentUser = UserModel.getUserModel();
         AccountCRUD crud = new AccountCRUD();
-        LinkedList<AccountModel> accList;
-        LinkedList<Integer> accountNumbers = new LinkedList<>();
+        CustomLinkedList<AccountModel> accList;
+        CustomLinkedList<Integer> accountNumbers = new CustomLinkedList<>();
         accList = crud.retrieveBankAccounts(currentUser.getId());
 
         if (accList != null) {
@@ -134,7 +156,7 @@ public class AccountView extends View {
             System.out.println("that you wish to make a DEPOSIT to: ");
             int answer = viewManager.getScanner().nextInt();
             viewManager.getScanner().nextLine();
-            if (accountNumbers.contains(answer)){
+            if (accountNumbers.contains(answer) != -1){
 
                 System.out.println("Enter the amount you want to DEPOSIT (positive numbers only): ");
                 float depositAmount = 0.00f;
@@ -148,7 +170,7 @@ public class AccountView extends View {
                     return;
                 }
 
-                crud.makeDeposit(answer, depositAmount, accList.get(accountNumbers.indexOf(answer)).getCurrentBalance());
+                crud.makeDeposit(answer, depositAmount, accList.get(accountNumbers.contains(answer)).getCurrentBalance());
                 System.out.println("\n\n Press any key followed by enter to continue...");
                 viewManager.getScanner().nextLine();
             }else{
@@ -165,9 +187,13 @@ public class AccountView extends View {
         }
     }
     public void accountSummary(){
+        // Method is in charge of showing all accounts with balances
+        // INPUT: user input
+        // OUTPUT: user account and balances printed to console.
+        // RETURN: VOID
         UserModel currentUser = UserModel.getUserModel();
         AccountCRUD crud = new AccountCRUD();
-        LinkedList<AccountModel> accList;
+        CustomLinkedList<AccountModel> accList;
         accList = crud.retrieveBankAccounts(currentUser.getId());
         if (accList != null){
             System.out.println("\n Account summary: \n");
@@ -184,6 +210,10 @@ public class AccountView extends View {
         }
     }
     public void createNewBankAcc(){
+        // Method is in charge of creating new bank account for user.
+        // INPUT: user input
+        // OUTPUT: new addition to account table and junction table
+        // RETURN: VOID
         UserModel currentUser = UserModel.getUserModel();
         AccountCRUD crud = new AccountCRUD();
         if(crud.createNewAccount(currentUser.getId())){
@@ -197,6 +227,7 @@ public class AccountView extends View {
 
     @Override
     public void nextView() {
+
         System.out.println("Ready to retrieve next view");
     }
 

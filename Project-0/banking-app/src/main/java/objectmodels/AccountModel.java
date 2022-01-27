@@ -2,6 +2,7 @@ package objectmodels;
 
 import java.sql.Connection;
 
+// Model used to hold all information pertaining to account side of app.
 public class AccountModel {
     private int accountId;
     private float currentBalance;

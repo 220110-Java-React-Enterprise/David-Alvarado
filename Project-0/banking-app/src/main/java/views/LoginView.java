@@ -15,10 +15,14 @@ public class LoginView extends View {
     }
     @Override
     public void renderView() {
+        // Method renders the login view for user.
+        // INPUT: user input
+        // OUTPUT: user interface to console.
+        // RETURN: Void
         String username;
         String password;
         try {
-            File file = new File(System.getProperty("user.dir") + "/src/login-title");
+            File file = new File(System.getProperty("user.dir") + "/src/main/java/arttxt/login-title");
             Scanner welcomeText = new Scanner(file);
             System.out.print("\n\n\n\n");
             while (welcomeText.hasNext()) {

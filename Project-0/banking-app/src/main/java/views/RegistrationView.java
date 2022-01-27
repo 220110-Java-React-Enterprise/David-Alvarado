@@ -19,6 +19,10 @@ public class RegistrationView extends View {
 
     @Override
     public void renderView() {
+        // Method renders the registration form for user.
+        // INPUT: user input
+        // OUTPUT: user interface to console.
+        // RETURN: Void
         UserModel user = UserModel.getUserModel();
         CredentialChecker check = CredentialChecker.getCredentialChecker();
         String firstName;
@@ -29,7 +33,7 @@ public class RegistrationView extends View {
         String password;
 
         try {
-            File file = new File(System.getProperty("user.dir") + "/src/registration-title");
+            File file = new File(System.getProperty("user.dir") + "/src/main/java/arttxt/registration-title");
             Scanner welcomeText = new Scanner(file);
             System.out.print("\n\n\n\n");
             while (welcomeText.hasNext()) {
@@ -111,6 +115,10 @@ public class RegistrationView extends View {
 
     @Override
     public void invalidEntry() {
+        // Method to prompt user to correct mistakes
+        // INPUT: user input
+        // OUTPUT: user interface to console.
+        // RETURN: Void
         String firstName;
         String lastName;
         String phone;

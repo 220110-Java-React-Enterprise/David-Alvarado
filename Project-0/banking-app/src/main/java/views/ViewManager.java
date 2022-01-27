@@ -1,5 +1,7 @@
 package views;
 
+import customlist.CustomLinkedList;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,14 +15,14 @@ public class ViewManager {
     private final Scanner scanner;
 
     //When adapting this in to P0, don't forget to replace this with your custom list structure
-    List<View> viewList;
+    CustomLinkedList<View> viewList;
     View nextView;
 
     private ViewManager() {
         //set up starting values and references
         running = true;
         scanner = new Scanner(System.in);
-        viewList = new LinkedList<>();
+        viewList = new CustomLinkedList<>();
     }
 
     public static ViewManager getViewManager(){
