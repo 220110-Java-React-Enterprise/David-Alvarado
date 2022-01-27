@@ -1,3 +1,7 @@
+package crud;
+
+import objectmodels.UserModel;
+
 import java.sql.*;
 
 public class UserCRUD{

@@ -1,10 +1,16 @@
+package views;
+
+import crud.AccountCRUD;
+import objectmodels.AccountModel;
+import objectmodels.UserModel;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class AccountView extends View{
+public class AccountView extends View {
 
     public AccountView(){
         viewName = "accounts";

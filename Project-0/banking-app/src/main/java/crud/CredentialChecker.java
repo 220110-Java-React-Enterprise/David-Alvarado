@@ -1,4 +1,4 @@
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+package crud;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +33,7 @@ public class CredentialChecker {
             Pattern pattern = Pattern.compile(regExp);
             Matcher matcher = pattern.matcher(name);
             boolean result = matcher.matches();
-            if (result){
+            if (!result){
                 System.out.println("\n Invalid characters detected, make sure your name consists of alphabetical characters(a-z,A-z),");
                 System.out.println("dashes(-), and apostrophe(')");
                 return false;
@@ -68,16 +68,22 @@ public class CredentialChecker {
             System.out.println("\n You left the \"email\" portion of the registration empty or email is too long. Try again.");
             return false;
         } else {
-            String regExp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-            Pattern pattern = Pattern.compile(regExp, Pattern.CASE_INSENSITIVE);
+            String regExp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$";
+            Pattern pattern = Pattern.compile(regExp);
             Matcher matcher = pattern.matcher(email);
-            if (!matcher.matches()) {
-                return false;
-            } else if (isThereDuplicate(email, "email")){
+
+            if (!matcher.matches() && !isThereDuplicate(email, "email"))
+            { if (!matcher.matches()) {
+                System.out.println("\n Wrong email format");
+            }else{
+                System.out.println("Duplicate email entered, \nare you sure you haven't created an account? \ntry logging in.");
+            }
                 return false;
             }
+
+            return true;
         }
-        return true;
+
     }
     public boolean isUsernameValid(String username){
         if (username.length() == 0 || username.length() > 100){
@@ -94,7 +100,7 @@ public class CredentialChecker {
 
     public boolean isThereDuplicate(String str, String col){
 
-        String sql = null;
+        String sql;
         switch (col) {
             case "phone":
                 sql = "SELECT * from users WHERE phone = ?";
@@ -115,8 +121,9 @@ public class CredentialChecker {
             try {
                 PreparedStatement pStatement = connection.prepareStatement(sql);
                 pStatement.setString(1,str);
-                ResultSet result = pStatement.executeQuery();
-                if (!result.wasNull()){
+                pStatement.executeQuery();
+                ResultSet result = pStatement.getResultSet();
+                if (result.wasNull()){
                     System.out.println("\n Duplicate in our system detected. Duplicate in " + col + " column." );
                     return true;
                 }

@@ -1,4 +1,4 @@
-/* Need to add mariadb dependency to the pom.xml file and refresh or else connection won't be established */
+package crud;/* Need to add mariadb dependency to the pom.xml file and refresh or else connection won't be established */
 
 import java.io.FileReader;
 import java.io.IOException;

@@ -1,3 +1,5 @@
+package views;
+
 // I am going to need 6 views
 //
 public abstract class View {

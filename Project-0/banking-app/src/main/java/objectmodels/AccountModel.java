@@ -1,3 +1,5 @@
+package objectmodels;
+
 import java.sql.Connection;
 
 public class AccountModel {
@@ -5,11 +7,11 @@ public class AccountModel {
     private float currentBalance;
 
 
-    AccountModel(){
+    public AccountModel(){
 
     }
 
-    AccountModel(int accountId, float currentBalance){
+    public AccountModel(int accountId, float currentBalance){
         this.accountId = accountId;
         this.currentBalance = currentBalance;
     }

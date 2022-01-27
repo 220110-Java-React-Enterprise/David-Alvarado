@@ -1,3 +1,4 @@
+package objectmodels;
 
 public class UserModel {
     private static UserModel model;
@@ -12,21 +13,20 @@ public class UserModel {
     private UserModel(){
 
     }
-//    public UserModel(String firstName, String lastName, String phoneNumber, String email, String username, String password){
-//
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.phoneNumber = phoneNumber;
-//        this.email = email;
-//        this.username = username;
-//        this.password = password;
 
-//    }
     public static UserModel getUserModel(){
         if (model == null){
             model = new UserModel();
         }
         return model;
+    }
+    public boolean isNull(){
+        if (firstName == null || lastName== null  ||
+                phoneNumber == null ||email == null ||
+                username == null || password == null){
+            return true;
+        }
+        return false;
     }
     public int getId() {
         return id;

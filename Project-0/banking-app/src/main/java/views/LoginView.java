@@ -1,10 +1,14 @@
+package views;
+
+import crud.UserCRUD;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class LoginView extends View {
 
-    LoginView(){
+    public LoginView(){
         viewName = "login";
         viewManager = ViewManager.getViewManager();
         viewBasedOnUserInputValue = null;

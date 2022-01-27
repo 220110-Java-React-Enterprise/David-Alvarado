@@ -1,3 +1,8 @@
+package crud;
+
+import objectmodels.AccountModel;
+import objectmodels.UserModel;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.LinkedList;
@@ -6,7 +11,7 @@ public class AccountCRUD {
     private final Connection connection;
     private UserModel user;
 
-    AccountCRUD(){
+    public AccountCRUD(){
         connection = ConnectionManager.getConnection();
         user = UserModel.getUserModel();
     }
